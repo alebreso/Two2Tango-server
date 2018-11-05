@@ -1,7 +1,7 @@
 # Readme for the server
 
 # The setup:
-# [checkbox:unchecked]
+[] [checkbox:unchecked]
 typeorm init --database postgres
 yarn add typescript \
  routing-controllers \
