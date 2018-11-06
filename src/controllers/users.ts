@@ -7,7 +7,8 @@ import {
   JsonController,
   Put,
   BadRequestError,
-  CurrentUser
+  CurrentUser,
+  Delete
 } from "routing-controllers";
 import User from "../entities/User";
 
@@ -16,7 +17,7 @@ export default class UserController {
   @Get("/users")
   async getAllUsers() {
     const users = await User.find();
-    return { users };
+    return users;
   }
 
   @Get("/users/:id")
@@ -25,7 +26,7 @@ export default class UserController {
     return user;
   }
 
-  @Post("/signup")
+  @Post("/users")
   @HttpCode(201)
   async addUser(@Body() data: User) {
     const { password, ...rest } = data;
@@ -37,43 +38,22 @@ export default class UserController {
     return user;
   }
 
-  @Put("/:id/change-email")
-  @HttpCode(201)
-  async updateEmail(
-    @Param("id") id: number,
-    @Body() update: Partial<User>,
-    @CurrentUser() user: User
-  ) {
-    if (user.id !== id)
-      throw new BadRequestError("You are not authorized to change this email");
+  @Put("/users")
+  async updateUser(@Body() update: Partial<User>, @CurrentUser() user: User) {
+    const entity = await User.findOne({ where: { id: user.id } });
 
-    const { email } = update;
-    const entity = await User.findOne(id);
-    if (!entity) throw new BadRequestError("User does not exist");
+    if (update.password) {
+      await entity.setPassword(update.password);
+      delete update.password;
+    }
 
-    entity.email = email;
-
-    return entity.save();
+    return await User.merge(entity, update).save();
   }
 
-  @Put("/:id/change-password")
-  @HttpCode(201)
-  async updatePassword(
-    @Param("id") id: number,
-    @Body() update: Partial<User>,
-    @CurrentUser() user: User
-  ) {
-    if (user.id !== id)
-      throw new BadRequestError(
-        "You are not authorized to change this password"
-      );
+  @Delete("/users")
+  async deleteUser(@CurrentUser() user: User) {
+    const entity = await User.findOne({ where: { id: user.id } });
 
-    const { password } = update;
-    const entity = await User.findOne(id);
-    if (!entity) throw new BadRequestError("User does not exist");
-
-    await entity.setPassword(password);
-
-    return entity.save();
+    return await User.remove(entity);
   }
 }

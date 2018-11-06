@@ -39,10 +39,10 @@ export default class Event extends BaseEntity {
   category: Category;
 
   @Column("int", { nullable: true })
-  creatorId: User;
+  userId: number;
 
-  @ManyToOne(type => User, user => user.events)
-  @JoinColumn({ name: "creatorId" })
+  @ManyToOne(type => User, user => user.events, { onDelete: "CASCADE" })
+  @JoinColumn()
   user: User;
 
   @OneToMany(type => Eventdate, eventdate => eventdate.event)

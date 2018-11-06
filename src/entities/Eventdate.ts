@@ -3,16 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  JoinColumn,
-  OneToOne,
-  Timestamp,
-  ManyToMany,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from "typeorm";
-import User from "./User";
 import Event from "./Event";
-
-// types
 
 @Entity("eventdates")
 export default class Eventdate extends BaseEntity {
@@ -26,11 +20,15 @@ export default class Eventdate extends BaseEntity {
   endDate: Date;
 
   @Column()
-  startTime: string; //Timestamp
+  startTime: string;
 
   @Column()
-  endTime: string; //Timestamp
+  endTime: string;
 
-  @ManyToOne(type => Event, event => event.eventdates)
+  @Column("int")
+  eventId: number;
+
+  @ManyToOne(type => Event, event => event.eventdates, { onDelete: "CASCADE" })
+  @JoinColumn()
   event: Event;
 }

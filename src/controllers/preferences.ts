@@ -19,11 +19,13 @@ export default class PreferenceController {
     const preferences = await Preference.find();
     return { preferences };
   }
+
   @Get("/preferences/:id([0-9]+)")
   async getPreference(@Param("id") id: number) {
     const preferences = await Preference.findOne(id);
     return preferences;
   }
+
   @Get("profile/:id([0-9]+)/preferences")
   async getPreferenceOfProfile(@Param("id") id: number) {
     const profile = await Profile.findOne(id);
@@ -44,6 +46,7 @@ export default class PreferenceController {
     }).save();
     return preference;
   }
+
   //@Authorized()
   @Put("/edit/:id([0-9]+)/preferences")
   @HttpCode(201)

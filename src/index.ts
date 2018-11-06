@@ -11,6 +11,7 @@ import UserController from "./controllers/users";
 import ProfileController from "./controllers/profiles";
 import LoginController from "./controllers/logins";
 import EventController from "./controllers/events";
+import EventdateController from "./controllers/eventdates";
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -23,7 +24,8 @@ useKoaServer(app, {
     UserController,
     ProfileController,
     LoginController,
-    EventController
+    EventController,
+    EventdateController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;
