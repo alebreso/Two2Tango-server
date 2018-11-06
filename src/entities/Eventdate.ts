@@ -12,7 +12,7 @@ import User from "./User";
 
 // types
 
-@Entity()
+@Entity("eventdates")
 export default class Eventdate extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

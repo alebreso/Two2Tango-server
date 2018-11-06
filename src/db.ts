@@ -32,18 +32,12 @@ class CustomNamingStrategy extends DefaultNamingStrategy
   }
 }
 
-// export default () =>
-//   createConnection()
-//     .then(_ => console.log("Connected to Postgres with TypeORM"))
-//     .catch(err => console.log(err));
-
 export const connectDatabase = async () => {
   const dbSettings = await getConnectionOptions();
   const settings = {
-    ...dbSettings,
-    namingStrategy: new CustomNamingStrategy()
+    ...dbSettings
+    //, namingStrategy: new CustomNamingStrategy()
   };
-
   return createConnection(settings).then(async () => {
     console.log("Connected to Postgres with TypeORM");
   });

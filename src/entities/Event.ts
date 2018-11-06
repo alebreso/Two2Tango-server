@@ -3,20 +3,16 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  JoinColumn,
-  OneToOne,
-  OneToMany,
   ManyToOne,
   ManyToMany,
   JoinTable
 } from "typeorm";
 import User from "./User";
-import { eventNames } from "cluster";
 import Eventdate from "./Eventdate";
 
 type Categories = "Salon" | "Class" | "Workshop" | "Festival";
 
-@Entity()
+@Entity("events")
 export default class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -43,10 +39,10 @@ export default class Event extends BaseEntity {
   user: User;
 
   @ManyToMany(type => User)
-  @JoinTable()
+  @JoinTable({ name: "events_users" })
   users: User[];
 
   @ManyToMany(type => Eventdate)
-  @JoinTable()
+  @JoinTable({ name: "events_eventdates" })
   dates: Eventdate[];
 }

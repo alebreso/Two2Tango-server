@@ -7,6 +7,8 @@ import User from "./entities/User";
 import * as Koa from "koa";
 import { Server } from "http";
 import { secret } from "./jwt";
+import UserController from "./controllers/users";
+import ProfileController from "./controllers/profiles";
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -15,10 +17,7 @@ const port = process.env.PORT || 4000;
 
 useKoaServer(app, {
   cors: true,
-  //   controllers: [
-  //     UserController,
-  //     LoginController
-  //   ],
+  controllers: [UserController, ProfileController],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;
     if (header && header.startsWith("Bearer ")) {
