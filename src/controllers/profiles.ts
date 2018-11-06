@@ -5,7 +5,8 @@ import {
   Body,
   Param,
   JsonController,
-  BadRequestError
+  BadRequestError,
+  Put
 } from "routing-controllers";
 import User from "../entities/User";
 import Profile from "../entities/Profile";
@@ -15,21 +16,12 @@ import { getConnection } from "typeorm";
 export default class ProfileController {
   @Get("/profiles")
   async getAllProfiles() {
-    const user = await getConnection()
-      .createQueryBuilder()
-      .select("user")
-      .from(User, "user")
-      .leftJoin("user.profile", "profile")
-      .where("user.id = :id", { id: 1 })
-      .getOne();
-
-    return user;
-    // const profiles = await Profile.find();
-    // return { profiles };
+    const profiles = await Profile.find();
+    return { profiles };
   }
 
   @Get("/profiles/:id")
-  async getUser(@Param("id") id: number) {
+  async getProfile(@Param("id") id: number) {
     const profile = await Profile.findOne(id);
     return profile;
   }
@@ -46,5 +38,17 @@ export default class ProfileController {
     }).save();
 
     return profile;
+  }
+
+  @Put("/profiles/:id/edit-profile")
+  async updateProfile(
+    @Param("id") id: number,
+    @Body() update: Partial<Profile>
+  ) {
+    const profile = await Profile.findOne(id);
+    if (!profile) throw new BadRequestError("Profile does not exist");
+
+    const updatedProfile = await Profile.merge(profile, update).save();
+    return updatedProfile;
   }
 }
