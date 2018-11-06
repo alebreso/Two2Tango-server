@@ -12,7 +12,7 @@ type Role = "Follower" | "Leader" | "Both";
 type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
 type Gender = "Male" | "Female" | "Other";
 
-@Entity()
+@Entity("preferences")
 export default class Preference extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

@@ -3,16 +3,16 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  JoinColumn,
   OneToOne,
-  Unique,
   OneToMany
 } from "typeorm";
+import * as bcrypt from "bcrypt";
 import Profile from "./Profile";
 import Event from "./Event";
 import Preference from "./Preference";
+import { Exclude } from "class-transformer";
 
-@Entity()
+@Entity("users")
 export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,6 +21,7 @@ export default class User extends BaseEntity {
   email: string;
 
   @Column({ nullable: false })
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @OneToOne(type => Profile, profile => profile.user)
@@ -31,4 +32,13 @@ export default class User extends BaseEntity {
 
   @OneToOne(type => Preference, preference => preference.user)
   preference: Preference;
+
+  async setPassword(rawPassword: string) {
+    const hash = await bcrypt.hash(rawPassword, 10);
+    this.password = hash;
+  }
+
+  checkPassword(rawPassword: string): Promise<boolean> {
+    return bcrypt.compare(rawPassword, this.password);
+  }
 }

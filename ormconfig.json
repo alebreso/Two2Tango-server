@@ -6,12 +6,12 @@
 	"password": "secret",
 	"database": "real-world-project",
 	"synchronize": true,
-	"logging": false,
+	"logging": true,
 	"entities": ["src/entities/**/*.ts"],
 	"migrations": ["src/migration/**/*.ts"],
 	"subscribers": ["src/subscriber/**/*.ts"],
 	"cli": {
-		"entitiesDir": "src/entities",
+		"entitiesDir": "target/entities",
 		"migrationsDir": "src/migration",
 		"subscribersDir": "src/subscriber"
 	}

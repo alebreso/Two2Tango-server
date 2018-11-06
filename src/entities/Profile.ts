@@ -8,11 +8,11 @@ import {
 } from "typeorm";
 import User from "./User";
 
-type Role = "Follower" | "Leader" | "Both";
+export type Role = "Follower" | "Leader" | "Both";
 type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
 type Gender = "Male" | "Female" | "Other";
 
-@Entity()
+@Entity("profiles")
 export default class Profile extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
