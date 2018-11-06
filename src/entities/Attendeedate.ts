@@ -11,11 +11,12 @@ import {
 } from "typeorm";
 import User from "./User";
 import Event from "./Event";
+import Attendee from "./Attendee";
 
 // types
 
-@Entity("eventdates")
-export default class Eventdate extends BaseEntity {
+@Entity("attendeedates")
+export default class Attendeedate extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,6 +32,6 @@ export default class Eventdate extends BaseEntity {
   @Column()
   endTime: string; //Timestamp
 
-  @ManyToOne(type => Event, event => event.eventdates)
-  event: Event;
+  @ManyToOne(type => Attendee, attendee => attendee.attendeedates)
+  attendee: Attendee;
 }

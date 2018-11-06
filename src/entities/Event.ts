@@ -5,12 +5,15 @@ import {
   BaseEntity,
   ManyToOne,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  JoinColumn,
+  OneToMany
 } from "typeorm";
 import User from "./User";
 import Eventdate from "./Eventdate";
+import Attendee from "./Attendee";
 
-type Categories = "Salon" | "Class" | "Workshop" | "Festival";
+type Category = "Salon" | "Class" | "Workshop" | "Festival";
 
 @Entity("events")
 export default class Event extends BaseEntity {
@@ -33,16 +36,18 @@ export default class Event extends BaseEntity {
   price: number;
 
   @Column({ nullable: true })
-  categories: Categories;
+  category: Category;
+
+  @Column("int", { nullable: true })
+  creatorId: User;
 
   @ManyToOne(type => User, user => user.events)
+  @JoinColumn({ name: "creatorId" })
   user: User;
 
-  @ManyToMany(type => User)
-  @JoinTable({ name: "events_users" })
-  users: User[];
+  @OneToMany(type => Eventdate, eventdate => eventdate.event)
+  eventdates: Eventdate[];
 
-  @ManyToMany(type => Eventdate)
-  @JoinTable({ name: "events_eventdates" })
-  dates: Eventdate[];
+  @OneToMany(type => Attendee, attendee => attendee.event)
+  attendees: Attendee[];
 }
