@@ -7,51 +7,70 @@ import {
   JsonController,
   BadRequestError,
   Put,
-  Authorized
+  CurrentUser,
+  Delete
 } from "routing-controllers";
 import User from "../entities/User";
-import Profile from "../entities/Profile";
-import Preference from "../entities/Preference";
-import Eventdate from "../entities/Eventdate";
 import Event from "../entities/Event";
-import {
-  createQueryBuilder,
-  QueryBuilder,
-  getConnection,
-  getRepository
-} from "typeorm";
+import Eventdate from "../entities/Eventdate";
+
 @JsonController()
 export default class EventdateController {
-  @Get("/eventsdates")
-  async getAllEventdate() {
-    const eventsDates = await Eventdate.find();
-    return { eventsDates };
+  @Get("/dates")
+  async getAllDates() {
+    const eventDates = await Eventdate.find();
+    return eventDates;
   }
-  @Get("/event/:id/dates")
-  async getDates(@Param("id") id: number) {
-    const eventRepository = getRepository(Event);
-    const dates = await eventRepository.find({
-      where: { id: id },
-      relations: ["dates"]
+
+  @Get("/events/:id/dates")
+  async getProfile(@Param("id") id: number) {
+    const eventWithDates = await Event.findOne(id, {
+      relations: ["eventdates"]
     });
-    return dates;
+    return eventWithDates;
   }
+
   @Post("/events/:id/dates")
   @HttpCode(201)
-  async addEventDates(@Param("id") id: number, @Body() data: Eventdate) {
+  async addDates(
+    @CurrentUser() user: User,
+    @Param("id") id: number,
+    @Body() data: Eventdate
+  ) {
     const event = await Event.findOne(id);
-    if (!event) throw new BadRequestError("Event not found");
-    const dates = await Eventdate.create({
-      ...data
+    if (!event) throw new BadRequestError("Event does not exist");
+
+    return await Eventdate.create({
+      ...data,
+      eventId: event.id
     }).save();
-    return dates;
   }
-  //@Authorized()
-  // @Put("/edit/:id/preferences")
-  // @HttpCode(201)
-  // async updatePreference(@Param("id")id :number, @Body()update :Partial<Preference>){
-  //   const preference = await Preference.findOne(id)
-  //   if(!preference) throw new BadRequestError('preference not found')
-  //   return await Preference.merge(preference,update).save()
+
+  // @Put("/events/:id/dates")
+  // async updateEvent(
+  //   @CurrentUser() user: User,
+  //   @Param("id") id: number,
+  //   @Body() update: Partial<Event>
+  // ) {
+  //   const event = await Event.findOne(id);
+  //   if (!event) throw new BadRequestError("Event does not exist");
+  //   if (user.id !== event.userId)
+  //     throw new BadRequestError("You can not edit this event");
+
+  //   return await Event.merge(event, update).save();
+  // }
+
+  // @Delete("/events/:id")
+  // async deleteEvent(
+  //   @CurrentUser() user: User,
+  //   @Param("id") id: number,
+  //   @Body() update: Partial<Event>
+  // ) {
+  //   const event = await Event.findOne(id);
+  //   if (!event) throw new BadRequestError("Event does not exist");
+  //   if (user.id !== event.userId)
+  //     throw new BadRequestError("You can not edit this event");
+
+  //   return await Event.remove(event);
   // }
 }

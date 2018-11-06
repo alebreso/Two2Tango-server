@@ -18,7 +18,7 @@ export default class EventController {
   @Get("/events")
   async getAllEvents() {
     const events = await Event.find();
-    return { events };
+    return events;
   }
 
   @Get("/events/:id")
@@ -27,18 +27,17 @@ export default class EventController {
     return event;
   }
 
-  // @Post("/events")
-  // @HttpCode(201)
-  // async addEvent(@CurrentUser() creator: User, @Body() data: Event) {
-  //   const event = await Event.create({
-  //     ...data,
-  //     creator
-  //   }).save();
+  @Post("/events")
+  @HttpCode(201)
+  async addEvent(@CurrentUser() user: User, @Body() data: Event) {
+    const event = await Event.create({
+      ...data,
+      user
+    }).save();
 
-  //   return event;
-  // }
+    return event;
+  }
 
-  // NEEDS TO HAVE A CHECK IF USER IS AUTHORIZED TO DELETE EVENT
   @Put("/events/:id")
   async updateEvent(
     @CurrentUser() user: User,
@@ -46,17 +45,13 @@ export default class EventController {
     @Body() update: Partial<Event>
   ) {
     const event = await Event.findOne(id);
-    console.log("-------------------------------");
-    console.log("User id: ", user.id);
-    //console.log("event creator: ", event.creator);
     if (!event) throw new BadRequestError("Event does not exist");
-    // if(user.id !== event.creator) throw new BadRequestError
+    if (user.id !== event.userId)
+      throw new BadRequestError("You can not edit this event");
 
-    const updatedEvent = await Event.merge(event, update).save();
-    return updatedEvent;
+    return await Event.merge(event, update).save();
   }
 
-  // NEEDS TO HAVE A CHECK IF USER IS AUTHORIZED TO DELETE EVENT
   @Delete("/events/:id")
   async deleteEvent(
     @CurrentUser() user: User,
@@ -65,6 +60,8 @@ export default class EventController {
   ) {
     const event = await Event.findOne(id);
     if (!event) throw new BadRequestError("Event does not exist");
+    if (user.id !== event.userId)
+      throw new BadRequestError("You can not edit this event");
 
     return await Event.remove(event);
   }

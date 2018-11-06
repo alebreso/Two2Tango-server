@@ -6,18 +6,18 @@ import {
   Param,
   JsonController,
   BadRequestError,
-  Put
+  Put,
+  CurrentUser
 } from "routing-controllers";
 import User from "../entities/User";
 import Profile from "../entities/Profile";
-import { getConnection } from "typeorm";
 
 @JsonController()
 export default class ProfileController {
   @Get("/profiles")
   async getAllProfiles() {
     const profiles = await Profile.find();
-    return { profiles };
+    return profiles;
   }
 
   @Get("/profiles/:id")
@@ -26,12 +26,9 @@ export default class ProfileController {
     return profile;
   }
 
-  @Post("/signup/:id/profile")
+  @Post("/profiles")
   @HttpCode(201)
-  async addProfile(@Param("id") id: number, @Body() data: Profile) {
-    const user = await User.findOne(id);
-    if (!user) throw new BadRequestError("User not found");
-
+  async addProfile(@CurrentUser() user: User, @Body() data: Profile) {
     const profile = await Profile.create({
       ...data,
       user
@@ -40,15 +37,11 @@ export default class ProfileController {
     return profile;
   }
 
-  @Put("/profiles/:id/edit-profile")
-  async updateProfile(
-    @Param("id") id: number,
-    @Body() update: Partial<Profile>
-  ) {
-    const profile = await Profile.findOne(id);
+  @Put("/profiles")
+  async updateProfile(@CurrentUser() user: User, @Body() update) {
+    const profile = await Profile.findOne({ where: { userId: user.id } });
     if (!profile) throw new BadRequestError("Profile does not exist");
 
-    const updatedProfile = await Profile.merge(profile, update).save();
-    return updatedProfile;
+    return await Profile.merge(profile, update).save();
   }
 }
