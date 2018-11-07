@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { Action, BadRequestError, useKoaServer } from "routing-controllers";
 import { connectDatabase } from "./db";
-// import {UserController, LoginController} from './controllers'
 import { verify } from "./jwt";
 import User from "./entities/User";
 import * as Koa from "koa";
@@ -12,6 +11,7 @@ import ProfileController from "./controllers/profiles";
 import LoginController from "./controllers/logins";
 import EventController from "./controllers/events";
 import EventdateController from "./controllers/eventdates";
+import PreferenceController from "./controllers/preferences";
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -22,8 +22,9 @@ useKoaServer(app, {
   cors: true,
   controllers: [
     UserController,
-    ProfileController,
     LoginController,
+    ProfileController,
+    PreferenceController,
     EventController,
     EventdateController
   ],

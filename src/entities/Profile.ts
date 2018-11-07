@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import User from "./User";
 
-export type Role = "Follower" | "Leader" | "Both";
+type Role = "Follower" | "Leader" | "Both";
 type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
 type Gender = "Male" | "Female" | "Other";
 
@@ -48,7 +48,7 @@ export default class Profile extends BaseEntity {
   about: string;
 
   @Column("int", { nullable: true })
-  userId: User;
+  userId: number;
 
   @OneToOne(type => User, user => user.profile, { onDelete: "CASCADE" })
   @JoinColumn()

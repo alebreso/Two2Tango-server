@@ -7,7 +7,8 @@ import {
   JsonController,
   BadRequestError,
   Put,
-  CurrentUser
+  CurrentUser,
+  Authorized
 } from "routing-controllers";
 import User from "../entities/User";
 import Profile from "../entities/Profile";
@@ -21,22 +22,24 @@ export default class ProfileController {
   }
 
   @Get("/profiles/:id")
-  async getProfile(@Param("id") id: number) {
+  async getSingleProfile(@Param("id") id: number) {
     const profile = await Profile.findOne(id);
     return profile;
   }
 
+  @Authorized()
   @Post("/profiles")
   @HttpCode(201)
   async addProfile(@CurrentUser() user: User, @Body() data: Profile) {
     const profile = await Profile.create({
       ...data,
-      user
+      userId: user.id
     }).save();
 
     return profile;
   }
 
+  @Authorized()
   @Put("/profiles")
   async updateProfile(@CurrentUser() user: User, @Body() update) {
     const profile = await Profile.findOne({ where: { userId: user.id } });

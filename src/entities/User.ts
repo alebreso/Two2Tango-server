@@ -25,6 +25,9 @@ export default class User extends BaseEntity {
   @Exclude({ toPlainOnly: true })
   password: string;
 
+  @Column({ nullable: false, default: false })
+  admin: boolean;
+
   @OneToOne(type => Profile, profile => profile.user)
   profile: Profile;
 
