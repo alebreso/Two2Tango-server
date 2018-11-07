@@ -1,20 +1,10 @@
 # Readme for the server
 
-# The setup:
+# This server is build with a postgreSQL database. It handles the routes through a KOA server. All the queries are done with an ORM named 'typeORM' which uses Typescript.
 
-typeorm init --database postgres
-yarn add typescript \
- routing-controllers \
- koa \
- koa-router \
- koa-bodyparser \
- koa-multer
+# To run:
 
-yarn add @types/koa \
- @types/koa-router \
- @types/koa-bodyparser \
- @types/koa-multer
+- yarn install
+- yarn start
 
-yarn add jsonwebtoken @types/jsonwebtoken
-yarn add kcors
-yarn add bcrypt @types/bcrypt
+A visitor can signup and login. When a user is logged in, they can see a list of results of selected tango partners. These potential partners are carefully selected based on the preferences of the user. When a certain result is clicked the profile page of that particular user is showed.
