@@ -19,10 +19,10 @@ export default class Preference extends BaseEntity {
   id: number;
 
   @Column("json", { nullable: false })
-  role: Role[];
+  role: Role;
 
   @Column("json", { nullable: false })
-  level: Level[];
+  level: Level;
 
   @Column("json", { nullable: true })
   age: Range;
