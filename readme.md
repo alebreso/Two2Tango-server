@@ -1,6 +1,6 @@
 # Readme for the server
 
-# This server is build with a postgreSQL database. It handles the routes through a KOA server. All the queries are done with an ORM named 'typeORM' which uses Typescript.
+### This server is build with a postgreSQL database. It handles the routes through a KOA server. All the queries are done with an ORM named 'typeORM' which uses Typescript.
 
 # To run:
 
