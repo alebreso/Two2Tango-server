@@ -66,3 +66,12 @@
 "height": [175, 180],
 "city": "Amsterdam"
 }
+
+{
+"role": ["leader"],
+"level": ["Beginner,"Intermediate"],
+"age": [20, 30],
+"gender": "male",
+"height": [155, 160],
+"city": ["Rotterdam", "Breda"]
+}
