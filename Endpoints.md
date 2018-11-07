@@ -55,3 +55,14 @@
 "city": "Amsterdam",
 "about": "My name is Sally, and I have been dancing for 3 years. I like to dance for fun and not be too serious"
 }
+
+# Preferences
+
+{
+"role": ["leader"],
+"level": ["Beginner"],
+"age": [20, 30],
+"gender": "male",
+"height": [175, 180],
+"city": "Amsterdam"
+}

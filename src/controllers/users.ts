@@ -8,9 +8,11 @@ import {
   Put,
   BadRequestError,
   CurrentUser,
-  Delete
+  Delete,
+  Authorized
 } from "routing-controllers";
 import User from "../entities/User";
+import { urlencoded } from "express";
 
 @JsonController()
 export default class UserController {
@@ -38,6 +40,7 @@ export default class UserController {
     return user;
   }
 
+  @Authorized()
   @Put("/users")
   async updateUser(@Body() update: Partial<User>, @CurrentUser() user: User) {
     const entity = await User.findOne({ where: { id: user.id } });
@@ -50,9 +53,20 @@ export default class UserController {
     return await User.merge(entity, update).save();
   }
 
+  @Authorized()
   @Delete("/users")
   async deleteUser(@CurrentUser() user: User) {
     const entity = await User.findOne({ where: { id: user.id } });
+
+    return await User.remove(entity);
+  }
+
+  @Authorized()
+  @Delete("/users/:id")
+  async adminDeleteUser(@Param("id") id: number, @CurrentUser() user: User) {
+    if (!user) throw new BadRequestError("Unauthorized access");
+    if (!user.admin) throw new BadRequestError("Unauthorized access");
+    const entity = await User.findOne(id);
 
     return await User.remove(entity);
   }
