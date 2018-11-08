@@ -18,7 +18,7 @@ export default class Preference extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("json", { nullable: false })
+  @Column("text", { nullable: true })
   role: Role;
 
   @Column("json", { nullable: false })
@@ -33,7 +33,7 @@ export default class Preference extends BaseEntity {
   @Column("json", { nullable: false })
   height: Range;
 
-  @Column("varchar", { length: 255, nullable: false })
+  @Column("json", { nullable: true })
   city: string[];
 
   @Column("int", { nullable: true })
