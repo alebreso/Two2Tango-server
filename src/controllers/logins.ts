@@ -18,7 +18,7 @@ class AuthenticatePayload {
 
 @JsonController()
 export default class LoginController {
-  @Post("/login")
+  @Post("/logins")
   async authenticate(@Body() data: AuthenticatePayload) {
     const { email, password } = data;
     const entity = await User.findOne({ email });
