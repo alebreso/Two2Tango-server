@@ -10,6 +10,7 @@ import UserController from "./controllers/users";
 import ProfileController from "./controllers/profiles";
 import LoginController from "./controllers/logins";
 import PreferenceController from "./controllers/preferences";
+import MessageController from "./controllers/messages";
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -22,7 +23,8 @@ useKoaServer(app, {
     UserController,
     LoginController,
     ProfileController,
-    PreferenceController
+    PreferenceController,
+    MessageController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;

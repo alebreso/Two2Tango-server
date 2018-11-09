@@ -10,6 +10,7 @@ import * as bcrypt from "bcrypt";
 import Profile from "./Profile";
 import Preference from "./Preference";
 import { Exclude } from "class-transformer";
+import Message from "./Message";
 
 @Entity("users")
 export default class User extends BaseEntity {
@@ -31,6 +32,9 @@ export default class User extends BaseEntity {
 
   @OneToOne(type => Preference, preference => preference.user)
   preference: Preference;
+
+  @OneToMany(type => Message, message => message.user)
+  messages: Message[];
 
   async setPassword(rawPassword: string) {
     const hash = await bcrypt.hash(rawPassword, 10);

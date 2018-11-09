@@ -68,3 +68,20 @@ values
 "height": [155, 160],
 "city": ["Rotterdam", "Breda"]
 }
+
+# Messages
+
+## SQL Queries to insert dummy data
+
+insert into messages(content, "userId")
+values
+('Hi! I would like to dance with you Cinzia!', 1),
+('Hi! I would like to dance with you Adam!', 2),
+('Hi! I would like to dance with you Bert!', 3),
+('Hi! I would like to dance with you Irene!', 4);
+
+## Postmen
+
+{
+"content": "Hi! I would like to dance with you"
+}
