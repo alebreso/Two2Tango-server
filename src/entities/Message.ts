@@ -18,7 +18,7 @@ export default class Message extends BaseEntity {
   @Column({ nullable: false })
   content: string;
 
-  @Column("int", { nullable: true })
+  @Column("int", { nullable: false })
   userId: number;
 
   @ManyToOne(type => User, user => user.messages)
