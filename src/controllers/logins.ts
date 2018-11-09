@@ -27,6 +27,6 @@ export default class LoginController {
       throw new BadRequestError("Invalid username/password");
 
     const jwt = sign({ id: entity.id });
-    return { jwt };
+    return { jwt, id: entity.id };
   }
 }
