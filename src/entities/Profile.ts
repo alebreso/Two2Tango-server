@@ -8,9 +8,9 @@ import {
 } from "typeorm";
 import User from "./User";
 
-type Role = "Follower" | "Leader" | "Both";
-type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
-type Gender = "Male" | "Female" | "Other";
+type Role = "follower" | "leader" | "both";
+type Level = "beginner" | "intermediate" | "advanced" | "professional";
+type Gender = "male" | "female" | "other";
 
 @Entity("profiles")
 export default class Profile extends BaseEntity {
