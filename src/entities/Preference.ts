@@ -12,6 +12,7 @@ type Role = "Follower" | "Leader" | "Both";
 type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
 type Gender = "Male" | "Female" | "Other";
 type Range = [number, number];
+type levelRange = [string,string,string,string]
 
 @Entity("preferences")
 export default class Preference extends BaseEntity {
@@ -22,7 +23,7 @@ export default class Preference extends BaseEntity {
   role: Role;
 
   @Column("json", { nullable: false })
-  level: Level;
+  level: levelRange;
 
   @Column("json", { nullable: true })
   age: Range;
