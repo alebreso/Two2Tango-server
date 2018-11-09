@@ -30,7 +30,7 @@ values
 ('Cinzia', 'Tango', 'leader', 'beginner', 'https://www.w3schools.com/w3css/img_avatar3.png', 30, 'female', 170, 'Amsterdam', 'My name is Cinzia, and I am the administrator', 1),
 ('Adam', 'Smith', 'leader', 'beginner', 'https://www.w3schools.com/w3css/img_avatar3.png', 30, 'male', 180, 'Amsterdam', 'My name is Adam, and I have been dancing for 3 years. I like to dance for fun and not be too serious', 2),
 ('Bert', 'Sizzles', 'leader', 'professional', 'https://www.w3schools.com/w3css/img_avatar3.png', 30, 'male', 176, 'Rotterdam', 'My name is Bert, and I have been dancing for 14 years. I take this very professional', 3),
-('Irene', 'Lato', 'follower', 'beginner', 'https://www.w3schools.com/w3css/img_avatar3.png', 30, 'male', 156, 'Utrecht', 'My name is Irene, and I have been dancing for only 1 year.', 4);
+('Irene', 'Lato', 'follower', 'beginner', 'https://www.w3schools.com/w3css/img_avatar3.png', 30, 'female', 156, 'Amsterdam', 'My name is Irene, and I have been dancing for only 1 year.', 4);
 
 ## Postman
 
@@ -53,10 +53,10 @@ values
 
 insert into preferences(role, level, age, gender, height, city, "userId")
 values
-('["leader"]', '["advanced"]', '[20,30]', 'male', '[175, 180]', '["Amsterdam"]', 1),
-('["follower"]', '["beginner"]', '[20,30]', 'female', '[175, 180]', '["Amsterdam"]', 2),
-('["leader"]', '["beginner"]', '[20,30]', 'female', '[175, 180]', '["Rotterdam"]', 3),
-('["leader"]', '["beginner"]', '[20,30]', 'male', '[175, 180]', '["Utrecht"]', 4);
+('leader', '["advanced"]', '[20,30]', 'male', '[155, 180]', '["Amsterdam"]', 1),
+('follower', '["beginner"]', '[20,30]', 'female', '[155, 180]', '["Amsterdam"]', 2),
+('leader', '["beginner"]', '[20,30]', 'female', '[175, 180]', '["Rotterdam"]', 3),
+('leader', '["beginner"]', '[20,30]', 'male', '[175, 180]', '["Utrecht"]', 4);
 
 ## Postman
 
