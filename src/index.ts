@@ -9,9 +9,8 @@ import { secret } from "./jwt";
 import UserController from "./controllers/users";
 import ProfileController from "./controllers/profiles";
 import LoginController from "./controllers/logins";
-import EventController from "./controllers/events";
-import EventdateController from "./controllers/eventdates";
 import PreferenceController from "./controllers/preferences";
+import MessageController from "./controllers/messages";
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -25,8 +24,7 @@ useKoaServer(app, {
     LoginController,
     ProfileController,
     PreferenceController,
-    EventController,
-    EventdateController
+    MessageController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;
