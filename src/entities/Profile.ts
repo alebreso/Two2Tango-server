@@ -4,7 +4,8 @@ import {
   Column,
   BaseEntity,
   JoinColumn,
-  OneToOne
+  OneToOne,
+  CreateDateColumn
 } from "typeorm";
 import User from "./User";
 
@@ -46,6 +47,9 @@ export default class Profile extends BaseEntity {
 
   @Column("text", { nullable: true })
   about: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 
   @Column("int", { nullable: true })
   userId: number;
