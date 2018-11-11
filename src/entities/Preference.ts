@@ -35,7 +35,7 @@ export default class Preference extends BaseEntity {
   height: Range;
 
   @Column("json", { nullable: true })
-  city: string[];
+  city: levelRange;
 
   @Column("int", { nullable: true })
   userId: number;
