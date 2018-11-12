@@ -12,7 +12,6 @@ import {
   Authorized
 } from "routing-controllers";
 import User from "../entities/User";
-import { urlencoded } from "express";
 
 @JsonController()
 export default class UserController {
