@@ -20,11 +20,10 @@ export default class ProfileController {
   // @Authorized()
   @Get("/profiles")
   async getAllProfiles(@CurrentUser() user: User) {
-    console.log("lands");
     if (!user) throw new BadRequestError("Login to see your results");
     console.log(user);
     const preference = await Preference.findOne({ where: { userId: user.id } });
-    console.log("preference", preference);
+    console.log("Preference: -------", preference);
     const profiles = await getConnection()
       .createQueryBuilder()
       .select("profile")
@@ -63,7 +62,7 @@ export default class ProfileController {
       .andWhere("profile.gender = :gender", { gender: preference.gender })
       .getMany();
 
-    console.log("All the profiles matching: ", profiles);
+    console.log("All the profiles matching: ---------- ", profiles);
 
     return profiles;
   }
