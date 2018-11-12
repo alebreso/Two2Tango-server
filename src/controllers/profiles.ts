@@ -24,7 +24,7 @@ export default class ProfileController {
     if (!user) throw new BadRequestError("Login to see your results");
     console.log(user);
     const preference = await Preference.findOne({ where: { userId: user.id } });
-
+    console.log("preference", preference);
     const profiles = await getConnection()
       .createQueryBuilder()
       .select("profile")
@@ -74,6 +74,16 @@ export default class ProfileController {
     return profile;
   }
 
+  @Get("/latest-profiles")
+  async getLatestProfiles() {
+    const profiles = await Profile.find({
+      select: ["firstName", "level", "photoUrl"],
+      order: { createdAt: "DESC" },
+      take: 5
+    });
+    return profiles;
+  }
+
   @Authorized()
   @Post("/profiles")
   @HttpCode(201)
@@ -89,6 +99,7 @@ export default class ProfileController {
   @Authorized()
   @Put("/profiles")
   async updateProfile(@CurrentUser() user: User, @Body() update) {
+    console.log(update);
     const profile = await Profile.findOne({ where: { userId: user.id } });
     if (!profile) throw new BadRequestError("Profile does not exist");
 
