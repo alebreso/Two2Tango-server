@@ -25,6 +25,7 @@ export default class PreferenceController {
   @Post("/preferences")
   @HttpCode(201)
   async addPreference(@CurrentUser() user: User, @Body() data: Preference) {
+    console.log("Post preferences data --------------", data);
     const preference = await Preference.create({
       ...data,
       userId: user.id

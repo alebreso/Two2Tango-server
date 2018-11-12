@@ -23,8 +23,9 @@ export default class ProfileController {
     if (!user) throw new BadRequestError("Login to see your results");
     console.log(user);
     const preference = await Preference.findOne({ where: { userId: user.id } });
-    if (!preference) throw new BadRequestError();
+
     console.log("Preference: -------", preference);
+    if (!preference) throw new BadRequestError();
     const profiles = await getConnection()
       .createQueryBuilder()
       .select("profile")
@@ -71,6 +72,13 @@ export default class ProfileController {
   @Get("/profiles/:id")
   async getSingleProfile(@Param("id") id: number) {
     const profile = await Profile.findOne(id);
+    return profile;
+  }
+
+  @Get("/my-profile")
+  async getMyProfile(@CurrentUser() user: User) {
+    const profile = await Profile.findOne({ where: { userId: user.id } });
+    if (!profile) throw new BadRequestError("Profile does not exist");
     return profile;
   }
 
