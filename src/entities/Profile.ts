@@ -54,7 +54,7 @@ export default class Profile extends BaseEntity {
   @Column("int", { nullable: true })
   userId: number;
 
-  @OneToOne(type => User, user => user.profile, { onDelete: "CASCADE" })
+  @OneToOne(_ => User, user => user.profile, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 }

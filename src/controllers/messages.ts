@@ -3,13 +3,8 @@ import {
   Post,
   HttpCode,
   Body,
-  Param,
   JsonController,
-  Put,
-  BadRequestError,
-  CurrentUser,
-  Delete,
-  Authorized
+  CurrentUser
 } from "routing-controllers";
 import User from "../entities/User";
 import Message from "../entities/Message";

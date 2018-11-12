@@ -3,9 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
-  OneToMany,
-  ManyToMany,
   ManyToOne
 } from "typeorm";
 import User from "./User";
@@ -21,6 +18,6 @@ export default class Message extends BaseEntity {
   @Column("int", { nullable: false })
   userId: number;
 
-  @ManyToOne(type => User, user => user.messages)
+  @ManyToOne(_ => User, user => user.messages, { onDelete: "CASCADE" })
   user: User;
 }

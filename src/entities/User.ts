@@ -27,13 +27,13 @@ export default class User extends BaseEntity {
   @Column({ nullable: false, default: false })
   admin: boolean;
 
-  @OneToOne(type => Profile, profile => profile.user)
+  @OneToOne(_ => Profile, profile => profile.user)
   profile: Profile;
 
-  @OneToOne(type => Preference, preference => preference.user)
+  @OneToOne(_ => Preference, preference => preference.user)
   preference: Preference;
 
-  @OneToMany(type => Message, message => message.user)
+  @OneToMany(_ => Message, message => message.user)
   messages: Message[];
 
   async setPassword(rawPassword: string) {
