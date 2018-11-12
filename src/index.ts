@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Action, BadRequestError, useKoaServer } from "routing-controllers";
-import { connectDatabase } from "./db";
+import connectDatabase from "./db";
 import { verify } from "./jwt";
 import User from "./entities/User";
 import * as Koa from "koa";
