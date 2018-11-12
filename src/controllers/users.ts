@@ -43,7 +43,7 @@ export default class UserController {
   @Put("/users")
   async updateUser(@Body() update: Partial<User>, @CurrentUser() user: User) {
     const entity = await User.findOne({ where: { id: user.id } });
-
+    if (!entity) throw new BadRequestError("User does not exist");
     if (update.password) {
       await entity.setPassword(update.password);
       delete update.password;
@@ -56,6 +56,7 @@ export default class UserController {
   @Delete("/users")
   async deleteUser(@CurrentUser() user: User) {
     const entity = await User.findOne({ where: { id: user.id } });
+    if (!entity) throw new BadRequestError("User does not exist");
 
     return await User.remove(entity);
   }
@@ -66,6 +67,7 @@ export default class UserController {
     if (!user) throw new BadRequestError("Unauthorized access");
     if (!user.admin) throw new BadRequestError("Unauthorized access");
     const entity = await User.findOne(id);
+    if (!entity) throw new BadRequestError("User does not exist");
 
     return await User.remove(entity);
   }

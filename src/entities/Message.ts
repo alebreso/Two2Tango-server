@@ -18,6 +18,6 @@ export default class Message extends BaseEntity {
   @Column("int", { nullable: false })
   userId: number;
 
-  @ManyToOne(type => User, user => user.messages, { onDelete: "CASCADE" })
+  @ManyToOne(_ => User, user => user.messages, { onDelete: "CASCADE" })
   user: User;
 }

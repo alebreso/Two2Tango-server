@@ -5,7 +5,6 @@ import { verify } from "./jwt";
 import User from "./entities/User";
 import * as Koa from "koa";
 import { Server } from "http";
-import { secret } from "./jwt";
 import UserController from "./controllers/users";
 import ProfileController from "./controllers/profiles";
 import LoginController from "./controllers/logins";

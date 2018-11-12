@@ -9,10 +9,10 @@ import {
 import User from "./User";
 
 type Role = "Follower" | "Leader" | "Both";
-type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
+// type Level = "Beginner" | "Intermediate" | "Advanced" | "Professional";
 type Gender = "Male" | "Female" | "Other";
 type Range = [number, number];
-type levelRange = [string,string,string,string]
+type levelRange = [string, string, string, string];
 
 @Entity("preferences")
 export default class Preference extends BaseEntity {
@@ -40,7 +40,7 @@ export default class Preference extends BaseEntity {
   @Column("int", { nullable: true })
   userId: number;
 
-  @OneToOne(type => User, user => user.preference, { onDelete: "CASCADE" })
+  @OneToOne(_ => User, user => user.preference, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 }

@@ -23,6 +23,7 @@ export default class ProfileController {
     if (!user) throw new BadRequestError("Login to see your results");
     console.log(user);
     const preference = await Preference.findOne({ where: { userId: user.id } });
+    if (!preference) throw new BadRequestError();
     console.log("Preference: -------", preference);
     const profiles = await getConnection()
       .createQueryBuilder()
