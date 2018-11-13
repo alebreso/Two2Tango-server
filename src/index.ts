@@ -10,6 +10,7 @@ import ProfileController from "./controllers/profiles";
 import LoginController from "./controllers/logins";
 import PreferenceController from "./controllers/preferences";
 import MessageController from "./controllers/messages";
+import ChatController from './controllers/chat'
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -23,7 +24,8 @@ useKoaServer(app, {
     LoginController,
     ProfileController,
     PreferenceController,
-    MessageController
+    MessageController,
+    ChatController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;
@@ -36,7 +38,6 @@ useKoaServer(app, {
         throw new BadRequestError(e);
       }
     }
-
     return false;
   },
   currentUserChecker: async (action: Action) => {
