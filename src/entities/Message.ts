@@ -3,11 +3,13 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from "typeorm";
+import Chat from "./Chat";
 import User from "./User";
 
-@Entity("messages")
+@Entity("message")
 export default class Message extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,9 +17,23 @@ export default class Message extends BaseEntity {
   @Column({ nullable: false })
   content: string;
 
+  @Column({nullable:true})
+  chatId: number;
+
+  @Column({nullable:false})
+  poster: string;
+
+  @Column('date', {nullable:false})
+  time: string
+
   @Column("int", { nullable: false })
   userId: number;
 
-  @ManyToOne(_ => User, user => user.messages, { onDelete: "CASCADE" })
-  user: User;
+  @ManyToOne(_ => User, user => user.messages)
+  @JoinColumn({name: "user_id"})
+  user: User
+
+  @ManyToOne(_=> Chat, chat => chat.messages)
+  @JoinColumn({ name: "chat_id" })
+  chat: Chat
 }
