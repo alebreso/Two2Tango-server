@@ -20,8 +20,14 @@ import Message from "./Message";
     @Column({nullable:false})
     creator: string
 
+    @Column({nullable:true})
+    creatorPhoto: string
+
     @Column({nullable:false})
     receiver: string
+
+    @Column({nullable:true})
+    receiverPhoto: string
 
     @Column("int", { nullable: true })
     secondUserId: number

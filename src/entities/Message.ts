@@ -30,10 +30,10 @@ export default class Message extends BaseEntity {
   userId: number;
 
   @ManyToOne(_ => User, user => user.messages)
-  @JoinColumn({name: "user_id"})
+  @JoinColumn({name: "userId"})
   user: User
 
   @ManyToOne(_=> Chat, chat => chat.messages)
-  @JoinColumn({ name: "chat_id" })
+  @JoinColumn({ name: "chatId" })
   chat: Chat
 }
