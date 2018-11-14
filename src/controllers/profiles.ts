@@ -17,11 +17,10 @@ import Preference from "../entities/Preference";
 
 @JsonController()
 export default class ProfileController {
-  // @Authorized()
+  @Authorized()
   @Get("/profiles")
   async getAllProfiles(@CurrentUser() user: User) {
     if (!user) throw new BadRequestError("Login to see your results");
-    console.log(user);
     const preference = await Preference.findOne({ where: { userId: user.id } });
 
     console.log("Preference: -------", preference);
