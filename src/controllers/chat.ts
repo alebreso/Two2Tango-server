@@ -16,9 +16,9 @@ import Profile from '../entities/Profile';
 export default class MessageController {
   @Get('/chats')
   async getAllChats(@CurrentUser() user: User) {
-    const chats = await Chat.find({ where: { userId: user.id } });
-    let allChats = await Chat.find({ where: { secondUserId: user.id } });
-    let results = await [chats, allChats];
+    const chatsInitiated = await Chat.find({ where: { userId: user.id } });
+    let chatsAccepted = await Chat.find({ where: { secondUserId: user.id } });
+    let results = await [chatsInitiated, chatsAccepted];
     return results;
   }
 
