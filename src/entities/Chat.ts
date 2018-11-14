@@ -23,6 +23,9 @@ import Message from "./Message";
     @Column({nullable:true})
     creatorPhoto: string
 
+    @Column({nullable:true})
+    lastMessage: string;
+
     @Column({nullable:false})
     receiver: string
 
