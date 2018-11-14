@@ -4,6 +4,8 @@ import Profile from "./entities/Profile";
 import Preference from "./entities/Preference";
 import Message from "./entities/Message";
 import Chat from './entities/Chat'
+import MatchedUsers from "./entities/MatchedUsers";
+
 
 export default () =>
   createConnection({
@@ -11,7 +13,7 @@ export default () =>
     url:
       process.env.DATABASE_URL ||
       "postgres://postgres:secret@localhost:5432/real-world-project",
-    entities: [User, Profile, Preference, Message, Chat],
+    entities: [User, Profile, Preference, Message, Chat, MatchedUsers],
     synchronize: true, // careful with this in production!
     logging: true
   }).then(_ => console.log("Connected to Postgres with TypeORM"));

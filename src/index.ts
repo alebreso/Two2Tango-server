@@ -11,6 +11,7 @@ import LoginController from "./controllers/logins";
 import PreferenceController from "./controllers/preferences";
 import MessageController from "./controllers/messages";
 import ChatController from './controllers/chat'
+import MatchedUsersController from "./controllers/matchUsers";
 
 const app = new Koa();
 const server = new Server(app.callback());
@@ -25,7 +26,8 @@ useKoaServer(app, {
     ProfileController,
     PreferenceController,
     MessageController,
-    ChatController
+    ChatController,
+    MatchedUsersController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;

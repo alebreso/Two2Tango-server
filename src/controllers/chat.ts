@@ -5,7 +5,10 @@ import {
   Param,
   Authorized,
   JsonController,
-  CurrentUser
+  CurrentUser,
+  BadRequestError,
+  Put,
+  Body
 } from 'routing-controllers';
 import User from '../entities/User';
 // import Message from '../entities/Message';
@@ -40,9 +43,23 @@ export default class MessageController {
       creator: `${creatorName[0].firstName} ${creatorName[0].lastName} `,
       creatorPhoto: creatorName[0].photoUrl,
       receiver: `${receiverName[0].firstName} ${receiverName[0].lastName}`,
-      receiverPhoto: receiverName[0].photoUrl
+      receiverPhoto: receiverName[0].photoUrl,
+      lastMessage:""
     }).save();
 
     return chat;
+  }
+
+  @Authorized()
+  @Put('/chats/:id')
+  @HttpCode(201)
+  async saveLastMessage(
+    @Param('id') id:number,
+    @Body() lastMessage: Partial<Chat>
+  ){
+    console.log(lastMessage)
+    let chat = await Chat.findOne({where:{id:id}})
+    if (!chat) throw new BadRequestError("chat doesn't exist")
+    return await Chat.merge(chat, lastMessage).save()
   }
 }

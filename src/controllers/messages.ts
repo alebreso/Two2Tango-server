@@ -32,7 +32,7 @@ export default class MessageController {
       let name = await Profile.find({where:{userId: user.id}})
       let timeNow = new Date()
       let finalDate = `${timeNow.getFullYear()}-${timeNow.getMonth()}-${timeNow.getDate()}  ${timeNow.getHours()}:${timeNow.getMinutes()}`
-    const message = await Message.create({
+      const message = await Message.create({
       content: data.content,
       userId: user.id,
       chatId:id,
